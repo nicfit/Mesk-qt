@@ -1,0 +1,78 @@
+<!DOCTYPE UI><UI version="3.3" stdsetdef="1">
+<class>ArtistAlbumBrowserBase</class>
+<widget class="QWidget">
+    <property name="name">
+        <cstring>ArtistAlbumBrowserBase</cstring>
+    </property>
+    <property name="geometry">
+        <rect>
+            <x>0</x>
+            <y>0</y>
+            <width>460</width>
+            <height>216</height>
+        </rect>
+    </property>
+    <property name="caption">
+        <string>Form1</string>
+    </property>
+    <grid>
+        <property name="name">
+            <cstring>unnamed</cstring>
+        </property>
+        <widget class="QLabel" row="0" column="0">
+            <property name="name">
+                <cstring>textLabel1</cstring>
+            </property>
+            <property name="text">
+                <string>Artists</string>
+            </property>
+        </widget>
+        <widget class="QListBox" row="1" column="2">
+            <item>
+                <property name="text">
+                    <string>All</string>
+                </property>
+            </item>
+            <property name="name">
+                <cstring>listBox2</cstring>
+            </property>
+        </widget>
+        <widget class="QLabel" row="0" column="2">
+            <property name="name">
+                <cstring>textLabel2</cstring>
+            </property>
+            <property name="text">
+                <string>Albums</string>
+            </property>
+        </widget>
+        <widget class="QListBox" row="1" column="0">
+            <item>
+                <property name="text">
+                    <string>All</string>
+                </property>
+            </item>
+            <property name="name">
+                <cstring>listBox1</cstring>
+            </property>
+        </widget>
+        <spacer row="1" column="1">
+            <property name="name">
+                <cstring>spacer1</cstring>
+            </property>
+            <property name="orientation">
+                <enum>Horizontal</enum>
+            </property>
+            <property name="sizeType">
+                <enum>Preferred</enum>
+            </property>
+            <property name="sizeHint">
+                <size>
+                    <width>10</width>
+                    <height>20</height>
+                </size>
+            </property>
+        </spacer>
+    </grid>
+</widget>
+<layoutdefaults spacing="6" margin="11"/>
+</UI>

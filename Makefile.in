@@ -1,0 +1,166 @@
+#
+#  Copyright (C) 2004-2005  Travis Shirk <travis@pobox.com>
+#
+#  This program is free software; you can redistribute it and/or modify
+#  it under the terms of the GNU General Public License as published by
+#  the Free Software Foundation; either version 2 of the License, or
+#  (at your option) any later version.
+#
+#  This program is distributed in the hope that it will be useful,
+#  but WITHOUT ANY WARRANTY; without even the implied warranty of
+#  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#  GNU General Public License for more details.
+#
+#  You should have received a copy of the GNU General Public License
+#  along with this program; if not, write to the Free Software
+#  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+#
+DIST_NAME=@PACKAGE_TARNAME@-@PACKAGE_VERSION@
+DIST_TAR=${DIST_NAME}.tar
+DIST_GZ=${DIST_TAR}.gz
+DIST_WWW=${DIST_NAME}-www.tar.gz
+PYTHON=@PYTHON@
+EBUILD_VERSION=@EBUILD_VERSION@
+
+ifdef DESTDIR
+  SETUP_ARGS=--root ${DESTDIR}
+endif
+prefix=@prefix@
+exec_prefix:=@exec_prefix@
+bindir:=$(subst //,/,${DESTDIR}/@bindir@)
+mandir:=$(subst //,/,${DESTDIR}/@mandir@)
+datadir:=$(subst //,/,${DESTDIR}/@datadir@)
+docdir:=$(subst //,/,${DESTDIR}/@datadir@/doc/${DIST_NAME})
+# Redefine these
+prefix:=$(subst //,/,${DESTDIR}/${prefix})
+exec_prefix:=$(subst //,/,${DESTDIR}/${exec_prefix})
+
+.PHONY: all install clean dist-clean maintainer-clean dist changelog \
+        tags TAGS release docs docs-clean \
+        www push-www
+
+all: module docs
+
+module:
+	cd ./src/mesk/ui && ${MAKE}
+	${PYTHON} setup.py build
+
+install: all
+	${PYTHON} setup.py install ${SETUP_ARGS}
+
+	install -m 755 -d ${bindir}
+	install -m 755 src/app/mesk ${bindir}
+
+	install -m 755 -d ${docdir}
+	install -m 644 README ${docdir}
+	install -m 644 AUTHORS ${docdir}
+	install -m 644 THANKS ${docdir}
+	install -m 644 COPYING ${docdir}
+	gzip -f -9 ${docdir}/COPYING
+	install -m 644 ChangeLog ${docdir}
+	gzip -f -9 ${docdir}/ChangeLog
+
+	install -m 755 -d ${mandir}/man1
+	# TODO
+	#cat doc/mesk.1 | gzip - > doc/mesk.1.gz
+	#install -m 644 doc/mesk.1.gz ${mandir}/man1
+
+clean:
+	-rm -rf build
+	find . -name \*.pyc -exec rm '{}' \;
+
+dist-clean: clean
+	-rm -rf autom4te*.cache ${DIST_NAME} ${DIST_GZ} ${DIST_WWW}
+	-rm setup.py
+	-rm doc/mesk.1.gz
+	-rm -f config.* *.bak
+	-rm -rf src/mesk/program_info.py
+	-find . -name \*.pyc -exec rm '{}' \;
+	-rm Makefile
+
+maintainer-clean: dist-clean docs-clean
+	-rm -f configure
+	-rm doc/mesk.1
+	-rm README.t2t
+	cd ./src/mesk/ui && ${MAKE} maintainer-clean
+
+dist: docs dist-clean
+	mkdir ${DIST_NAME}
+	cp ChangeLog AUTHORS COPYING README README.html TODO NEWS THANKS \
+	   ${DIST_NAME}
+	cp acsite.m4 configure setup.py.in Makefile.in ${DIST_NAME}
+
+	mkdir ${DIST_NAME}/etc
+	cp etc/mesk-${EBUILD_VERSION}.ebuild ${DIST_NAME}/etc
+	mkdir ${DIST_NAME}/src
+	cp -r src/mesk ${DIST_NAME}/src
+	mkdir ${DIST_NAME}/bin
+	cp src/app/mesk ${DIST_NAME}/bin
+	mkdir ${DIST_NAME}/doc
+	# TODO
+	#cp doc/mesk.1.in ${DIST_NAME}/doc
+
+	find ${DIST_NAME} -type d -name CVS -print | xargs rm -rf
+	tar cf ${DIST_TAR} ${DIST_NAME}
+	gzip ${DIST_TAR}
+	rm -rf ${DIST_NAME}
+	./autogen.sh
+
+release: dist www sloccount
+	# Re-bootstap to undo dist-clean
+	./autogen.sh > /dev/null 2>&1
+
+changelog:
+	@if test -r ChangeLog; then \
+	   cvs2cl.pl --fsf -r -U .users -P --accum;\
+	else\
+	   cvs2cl.pl --fsf -r -U .users -P;\
+	fi
+	   
+tags TAGS: 
+	@if test -f tags; then \
+	   rm tags; \
+        fi
+	@ctags -R --exclude='tmp/*' --exclude='build/*'
+
+docs:
+	if test -f README.t2t; then\
+	   ${MAKE} README;\
+	   ${MAKE} README.html;\
+	fi
+
+README: README.t2t
+	txt2tags -t txt --stdout README.t2t >| README
+
+README.html: README.t2t
+	txt2tags -t html --stdout README.t2t >| README.html
+
+docs-clean:
+	-rm README
+	-rm README.html
+
+www:
+	-rm -rf ./www
+	-mkdir -p www/mesk/releases
+	-mkdir www/mesk/releases/gentoo
+	cp README.html ChangeLog COPYING NEWS TODO THANKS www/mesk
+	cd www/mesk && ln -s README.html index.html
+	cp ${DIST_GZ} www/mesk/releases
+	cp etc/mesk-${EBUILD_VERSION}.ebuild www/mesk/releases/gentoo
+	tar czvf ${DIST_WWW} www
+	rm -rf www
+
+push-www:
+	scp ${DIST_WWW} nicfit:.
+	ssh nicfit 'tar xzvf ${DIST_WWW}'
+
+sloccount:
+	sloccount ./src ./bin
+	sloccount --cached --details ./src ./bin
+
+test-env-clean:
+	-rm -rf ./test
+test-env:
+	mkdir ./test
+	sqlite ./test/Test.db < ./sql/setupdb-sqlite.sql
+	mkdir ./test/music

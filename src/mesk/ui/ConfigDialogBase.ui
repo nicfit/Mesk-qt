@@ -1,0 +1,347 @@
+<!DOCTYPE UI><UI version="3.3" stdsetdef="1">
+<class>Config</class>
+<widget class="QDialog">
+    <property name="name">
+        <cstring>Config</cstring>
+    </property>
+    <property name="geometry">
+        <rect>
+            <x>0</x>
+            <y>0</y>
+            <width>441</width>
+            <height>488</height>
+        </rect>
+    </property>
+    <property name="caption">
+        <string>Mesk Config</string>
+    </property>
+    <property name="sizeGripEnabled">
+        <bool>true</bool>
+    </property>
+    <widget class="QLayoutWidget">
+        <property name="name">
+            <cstring>layout4</cstring>
+        </property>
+        <property name="geometry">
+            <rect>
+                <x>11</x>
+                <y>443</y>
+                <width>419</width>
+                <height>34</height>
+            </rect>
+        </property>
+        <hbox>
+            <property name="name">
+                <cstring>unnamed</cstring>
+            </property>
+            <spacer>
+                <property name="name">
+                    <cstring>Horizontal Spacing2</cstring>
+                </property>
+                <property name="orientation">
+                    <enum>Horizontal</enum>
+                </property>
+                <property name="sizeType">
+                    <enum>Expanding</enum>
+                </property>
+                <property name="sizeHint">
+                    <size>
+                        <width>330</width>
+                        <height>20</height>
+                    </size>
+                </property>
+            </spacer>
+            <widget class="QPushButton">
+                <property name="name">
+                    <cstring>buttonOk</cstring>
+                </property>
+                <property name="text">
+                    <string>&amp;OK</string>
+                </property>
+                <property name="accel">
+                    <string></string>
+                </property>
+                <property name="autoDefault">
+                    <bool>true</bool>
+                </property>
+                <property name="default">
+                    <bool>true</bool>
+                </property>
+            </widget>
+            <widget class="QPushButton">
+                <property name="name">
+                    <cstring>pushButton7</cstring>
+                </property>
+                <property name="text">
+                    <string>Apply</string>
+                </property>
+            </widget>
+            <widget class="QPushButton">
+                <property name="name">
+                    <cstring>buttonCancel</cstring>
+                </property>
+                <property name="text">
+                    <string>&amp;Cancel</string>
+                </property>
+                <property name="accel">
+                    <string></string>
+                </property>
+                <property name="autoDefault">
+                    <bool>true</bool>
+                </property>
+            </widget>
+        </hbox>
+    </widget>
+    <widget class="QWidgetStack">
+        <property name="name">
+            <cstring>widgetStack1</cstring>
+        </property>
+        <property name="geometry">
+            <rect>
+                <x>134</x>
+                <y>12</y>
+                <width>295</width>
+                <height>424</height>
+            </rect>
+        </property>
+        <property name="frameShape">
+            <enum>NoFrame</enum>
+        </property>
+        <widget class="QWidget">
+            <property name="name">
+                <cstring>WStackPage</cstring>
+            </property>
+            <attribute name="id">
+                <number>0</number>
+            </attribute>
+            <vbox>
+                <property name="name">
+                    <cstring>unnamed</cstring>
+                </property>
+                <widget class="QLabel">
+                    <property name="name">
+                        <cstring>textLabel1</cstring>
+                    </property>
+                    <property name="text">
+                        <string>&lt;h3&gt;&lt;b&gt;Music Directories&lt;/b&gt;&lt;/h3&gt;</string>
+                    </property>
+                    <property name="alignment">
+                        <set>AlignVCenter</set>
+                    </property>
+                </widget>
+                <widget class="QListBox">
+                    <item>
+                        <property name="text">
+                            <string>New Item</string>
+                        </property>
+                    </item>
+                    <property name="name">
+                        <cstring>listBox2_2</cstring>
+                    </property>
+                </widget>
+                <widget class="QLabel">
+                    <property name="name">
+                        <cstring>textLabel2</cstring>
+                    </property>
+                    <property name="text">
+                        <string>&lt;b&gt;&lt;h3&gt;Exclude Directories&lt;/h3&gt;&lt;/b&gt;</string>
+                    </property>
+                    <property name="alignment">
+                        <set>AlignVCenter</set>
+                    </property>
+                </widget>
+                <widget class="QListBox">
+                    <item>
+                        <property name="text">
+                            <string>New Item</string>
+                        </property>
+                    </item>
+                    <property name="name">
+                        <cstring>listBox3</cstring>
+                    </property>
+                </widget>
+                <widget class="QLayoutWidget">
+                    <property name="name">
+                        <cstring>layout2</cstring>
+                    </property>
+                    <hbox>
+                        <property name="name">
+                            <cstring>unnamed</cstring>
+                        </property>
+                        <widget class="QPushButton">
+                            <property name="name">
+                                <cstring>pushButton4</cstring>
+                            </property>
+                            <property name="text">
+                                <string>Add</string>
+                            </property>
+                        </widget>
+                        <widget class="QPushButton">
+                            <property name="name">
+                                <cstring>pushButton6</cstring>
+                            </property>
+                            <property name="text">
+                                <string>Exclude</string>
+                            </property>
+                        </widget>
+                        <widget class="QPushButton">
+                            <property name="name">
+                                <cstring>pushButton5</cstring>
+                            </property>
+                            <property name="text">
+                                <string>Remove</string>
+                            </property>
+                        </widget>
+                    </hbox>
+                </widget>
+            </vbox>
+        </widget>
+        <widget class="QWidget">
+            <property name="name">
+                <cstring>WStackPage</cstring>
+            </property>
+            <attribute name="id">
+                <number>1</number>
+            </attribute>
+            <widget class="QGroupBox">
+                <property name="name">
+                    <cstring>groupBox1</cstring>
+                </property>
+                <property name="geometry">
+                    <rect>
+                        <x>20</x>
+                        <y>20</y>
+                        <width>220</width>
+                        <height>102</height>
+                    </rect>
+                </property>
+                <property name="title">
+                    <string>GStreamer</string>
+                </property>
+                <vbox>
+                    <property name="name">
+                        <cstring>unnamed</cstring>
+                    </property>
+                    <widget class="QLayoutWidget">
+                        <property name="name">
+                            <cstring>layout9</cstring>
+                        </property>
+                        <hbox>
+                            <property name="name">
+                                <cstring>unnamed</cstring>
+                            </property>
+                            <widget class="QLabel">
+                                <property name="name">
+                                    <cstring>textLabel1_2_2</cstring>
+                                </property>
+                                <property name="text">
+                                    <string>&lt;p align="right"&gt;Output Plugin:&lt;/p&gt;</string>
+                                </property>
+                                <property name="alignment">
+                                    <set>AlignVCenter</set>
+                                </property>
+                            </widget>
+                            <widget class="QComboBox">
+                                <item>
+                                    <property name="text">
+                                        <string>ALSA</string>
+                                    </property>
+                                </item>
+                                <item>
+                                    <property name="text">
+                                        <string>OSS</string>
+                                    </property>
+                                </item>
+                                <item>
+                                    <property name="text">
+                                        <string>ESD</string>
+                                    </property>
+                                </item>
+                                <property name="name">
+                                    <cstring>comboBox2_2</cstring>
+                                </property>
+                            </widget>
+                        </hbox>
+                    </widget>
+                    <widget class="QLayoutWidget">
+                        <property name="name">
+                            <cstring>layout10</cstring>
+                        </property>
+                        <hbox>
+                            <property name="name">
+                                <cstring>unnamed</cstring>
+                            </property>
+                            <widget class="QLabel">
+                                <property name="name">
+                                    <cstring>textLabel1_3</cstring>
+                                </property>
+                                <property name="text">
+                                    <string>&lt;p align="right"&gt;Gap Delay:&lt;/p&gt;</string>
+                                </property>
+                                <property name="alignment">
+                                    <set>AlignVCenter</set>
+                                </property>
+                            </widget>
+                            <widget class="QSpinBox">
+                                <property name="name">
+                                    <cstring>spinBox1_2</cstring>
+                                </property>
+                                <property name="suffix">
+                                    <string> ms</string>
+                                </property>
+                                <property name="maxValue">
+                                    <number>10000</number>
+                                </property>
+                                <property name="lineStep">
+                                    <number>500</number>
+                                </property>
+                                <property name="value">
+                                    <number>1000</number>
+                                </property>
+                            </widget>
+                        </hbox>
+                    </widget>
+                </vbox>
+            </widget>
+        </widget>
+    </widget>
+    <widget class="QListBox">
+        <item>
+            <property name="text">
+                <string>Music</string>
+            </property>
+        </item>
+        <item>
+            <property name="text">
+                <string>Audio</string>
+            </property>
+        </item>
+        <property name="name">
+            <cstring>listBox2</cstring>
+        </property>
+        <property name="geometry">
+            <rect>
+                <x>10</x>
+                <y>10</y>
+                <width>116</width>
+                <height>424</height>
+            </rect>
+        </property>
+    </widget>
+</widget>
+<connections>
+    <connection>
+        <sender>buttonOk</sender>
+        <signal>clicked()</signal>
+        <receiver>Config</receiver>
+        <slot>accept()</slot>
+    </connection>
+    <connection>
+        <sender>buttonCancel</sender>
+        <signal>clicked()</signal>
+        <receiver>Config</receiver>
+        <slot>reject()</slot>
+    </connection>
+</connections>
+<layoutdefaults spacing="6" margin="11"/>
+</UI>

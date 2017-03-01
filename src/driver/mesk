@@ -1,0 +1,71 @@
+#!/usr/bin/env python
+################################################################################
+#  Copyright (C) 2004  Travis Shirk <travis@pobox.com>
+#
+#  This program is free software; you can redistribute it and/or modify
+#  it under the terms of the GNU General Public License as published by
+#  the Free Software Foundation; either version 2 of the License, or
+#  (at your option) any later version.
+#
+#  This program is distributed in the hope that it will be useful,
+#  but WITHOUT ANY WARRANTY; without even the implied warranty of
+#  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#  GNU General Public License for more details.
+#
+#  You should have received a copy of the GNU General Public License
+#  along with this program; if not, write to the Free Software
+#  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+#
+#  $Id: mesk,v 1.3 2005/02/05 22:22:27 travis Exp $
+################################################################################
+import sys;
+import mesk;
+import mesk.ui;
+from qt import *;
+
+class MeskApp:
+    def __init__(self):
+        app = QApplication(sys.argv);
+        self.app = app;
+        QApplication.setStyle(QPlatinumStyle());
+
+        self.start_wizard = None;
+        self.main_win = None;
+        try:
+            config = mesk.config.getDefaultConfig();
+        except (IOError, mesk.config.ConfigException), ex:
+            self.start_wizard = mesk.ui.StartHereWizard();
+            sys.stderr.write("Configuration Error: %s" % ex);
+            return;
+
+        self.config = config;
+        archive = mesk.archive.Archive(config.getFirstArchiveConfig());
+        self.archive = archive;
+
+        main_win = self.main_win = mesk.ui.MainWindow(config, archive);
+        app.setMainWidget(main_win);
+
+        # Hook up application close events
+        QObject.connect(app, SIGNAL("aboutToQuit()"),
+                        main_win.saveAppState);
+        QObject.connect(main_win, PYSIGNAL("mainWindowExit"),
+                        app, SLOT("quit()"));
+        QObject.connect(app, SIGNAL("lastWindowClosed()"), app, SLOT("quit()"));
+
+    def run(self):
+        if self.start_wizard:
+            self.start_wizard.show();
+            self.start_wizard.exec_loop();
+            if not self.start_wizard.getResults():
+                return 1;
+            # XXX: Need to reload configuration
+        else:
+            self.main_win.show();
+        self.app.exec_loop();
+        return 0;
+
+if __name__ == "__main__":
+    app = MeskApp();
+    rc = app.run();
+    sys.exit(rc);
+

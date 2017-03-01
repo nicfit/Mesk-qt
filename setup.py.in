@@ -1,0 +1,14 @@
+from distutils.core import setup;
+setup(
+  name="Mesk",
+  version="@PACKAGE_VERSION@",
+  description="Music Management Software",
+  author="Travis Shirk",
+  author_email="travis@pobox.com",
+  url="http://mesk.nicfit.net/",
+  packages=["mesk",
+            "mesk.ui"],
+  package_dir={"mesk": "src/mesk",
+               "mesk.ui": "src/mesk/ui"}
+)
+

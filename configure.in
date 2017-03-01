@@ -1,0 +1,49 @@
+dnl
+dnl  Copyright (C) 2004-2005  Travis Shirk <travis@pobox.com>
+dnl
+dnl  This program is free software; you can redistribute it and/or modify
+dnl  it under the terms of the GNU General Public License as published by
+dnl  the Free Software Foundation; either version 2 of the License, or
+dnl  (at your option) any later version.
+dnl
+dnl  This program is distributed in the hope that it will be useful,
+dnl  but WITHOUT ANY WARRANTY; without even the implied warranty of
+dnl  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+dnl  GNU General Public License for more details.
+dnl
+dnl  You should have received a copy of the GNU General Public License
+dnl  along with this program; if not, write to the Free Software
+dnl  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+dnl
+
+AC_INIT([Mesk], [0.0.3], [Travis Shirk <travis@pobox.com>], [mesk])
+
+EBUILD_RELEASE=
+EBUILD_VERSION=${PACKAGE_VERSION}
+if test -n "$EBUILD_RELEASE"; then
+    EBUILD_VERSION=${EBUILD_VERSION}-${EBUILD_RELEASE}
+fi
+AC_SUBST([EBUILD_VERSION])
+
+AC_PREREQ([2.57])
+AC_COPYRIGHT([GNU GPL])
+AC_REVISION([$Revision: 1.12 $])
+
+BUILD_DATE=`date`
+AC_SUBST([BUILD_DATE])
+MANPAGE_DATE=`date +'%b. %d, %Y'`
+AC_SUBST([MANPAGE_DATE])
+
+AC_PROG_MAKE_SET
+ACX_CHECK_PYTHON([2.3])
+ACX_CHECK_EYED3([0.6.4])
+ACX_CHECK_GST_PYTHON([0.8.7])
+
+AC_CONFIG_FILES([Makefile\
+                 setup.py\
+		 src/mesk/program_info.py])
+if test -f README.t2t.in; then
+   AC_CONFIG_FILES([README.t2t])
+fi
+
+AC_OUTPUT

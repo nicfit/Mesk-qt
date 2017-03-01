@@ -1,0 +1,126 @@
+################################
+# Key:
+  - To do
+  + Completed
+  ~ In progress
+  X Decided not to do
+  ? Need more information
+  * Milestone target
+################################
+
+Mesk:
+  - New gst-python in portage?
+  ~ make testenv (in subversion)
+  - Initial run from new environment
+  ~ subversion migration (a few remaining bits)
+  - README
+  ~ THANKS
+  - Credit gnome icons (THANKS or AUTHORS?)
+  - The ability to mark favorites. I need to start tracking that shit
+  ~ make dist; make release
+  ~ ebuild
+  - 0.0.4 (for home and adam and porkchop)
+  * Milestone features
+      - Bug deleting playing file???
+      - Bug deleting all tracks
+      - Event based framework for downloading covers and allmusic fallback
+      - View menu support
+        - Construct all tabs on demand using a factory
+      - AlbumCoverLabel (CurrentlyPlayingWidget) info tooltip
+      - Connect trackChanged signals to AlbumCoverLabel update.
+      - Connect trackChanged signals to PlaylistWidget update.
+      - Change name to Mesk and import new CVS module
+      - Configuration dialog
+      - Handle multiple archive roots.
+      - Better eyeD3 checker (extra credit: eyed3.m4)
+      - Playlist views (Artists, Albums (with artist),
+                        Tracks (with artist and album))
+      - Use gconf (iff gnome detected/requested) to determine audio output
+      - Mini mode
+      - Default font selection and cascading family for all widgets
+        (QApplication?)
+      - Debug log should go to console
+  - Research DAAP for audio sharing with iTunes and other DAAP apps
+  - Database connection/cursor pool for (modeled after python mutex cb):
+    _sqlite.OperationalError: database is locked (happens on execute)
+  - How to handle compilations?
+  - How to handle singles?
+  - A queue history, and better shuffle history.
+  - Rework trackSkipped signal for new rewind code.
+  - http playlist entries
+    - icecast stream support
+    - individual track streaming with http AUTH support
+      (see chat log w/ PorkChop)
+  - Improve painting of playlist for large adds/deletes
+  ~ First run routines
+    - Create one archive
+      - Ask for archive root
+      - Create empty db
+      - Sync DB
+      - Ask for "master" playlist name.
+    ~ Create .meskrc template
+    - Create ~/.meskrc.ini with gathered values.
+    - Make intial sqlite db
+  - --:-- default time label
+  - Remote control (using named pipe)
+  - Multimedia key support
+  - Show stop/pause pixmaps in status column
+  - Handle foreign files in playlists
+  - Handle URLs in playlists
+  - QTable::paintEmptyArea with water mark
+  - Need sync logs viewable in GUI with preliminary support for fix marks
+  - Browse album cover possibilities and allow changing
+  - Playlist colums should be configurable, including their order
+  - Optparse in mesk.py
+  - Playlist.peek(n) -- Look ahead.
+  - Tools dialog for syncing db stats to files
+    - A utility for syncing database track id to UFID frame in tag
+      (requires eyeD3 support).
+    - A utility for syncing database playcount to tag.
+  ~ Browser UI
+    - Genres -- SELECT DISTINCT g.* FROM tracks AS t,
+                                         genres AS g WHERE t.genre_id = g.id;
+  - Mark "favorite" songs in DB and display in status column
+  - New playlist
+    - Must be able to maintain the "active" playlist
+    - Must be able to denote the active playlist with an icon or something.
+    + Must be able to handle empty playlists
+  - Truncate table columns to keep as narrow as possible
+  - Verify that genre table is in sync with eyeD3. (e.g., add Rock/Pop)
+    Or even, build the table from eyeD3
+  ~ GstAudioPlayer:
+     - Icons for widgets from Heather
+     - Exceptions
+     - Rework track position and seek algorithms
+       - Move _trackSliderPressed and _trackSliderReleased into the widget
+         This will require having the widget take the control instead of the 
+         other way around.
+     - Need a queue element in the pipeline?
+     - Visual analyzer
+     - Balance control
+     ~ Volume control & widget
+     - Return key not getting seen in playlist.  This would be good for and
+       externalPlay.
+  - Ripping & encoding w/ CDDB + Amazon lookup
+    - CDDB.py
+    - cdparanoia
+    - lame/oggenc
+  - Playlist reordering (drag and drop), sorting
+  - Smart playlists - Need a better name... Dynamic
+  - Database enhancements
+    - Bad tag detection
+      - Detection of tags that are incomplete
+      - Detection of Artists names that are not equal unless compare
+        case-insensitive
+      - Detection of albums where year values don't match
+  - Theme is shite and the colors remind me of puke.
+  - Localization using gettext and _("string")
+  - MySQL code Database refactor.
+  - Investigate how Qt does resource bundles
+  - Tagging UI and code
+  - Replay gain (alsa rhythmbox)
+  - BPM
+  - More triumphant repeat.  The standard behavior is mostly useless
+  - See acast for a gstreamer implementation of shoutcast, etc.
+  - AllMusic:
+    http://www.allmusic.com/cg/amg.dll?sql=Mr.+Bungle&P=amg&opt1=1

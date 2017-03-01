@@ -1,0 +1,174 @@
+<!DOCTYPE UI><UI version="3.3" stdsetdef="1">
+<class>AudioControlWidgetBase</class>
+<widget class="QWidget">
+    <property name="name">
+        <cstring>AudioControlWidgetBase</cstring>
+    </property>
+    <property name="geometry">
+        <rect>
+            <x>0</x>
+            <y>0</y>
+            <width>254</width>
+            <height>77</height>
+        </rect>
+    </property>
+    <property name="sizePolicy">
+        <sizepolicy>
+            <hsizetype>1</hsizetype>
+            <vsizetype>4</vsizetype>
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+        </sizepolicy>
+    </property>
+    <property name="caption">
+        <string>Form1</string>
+    </property>
+    <vbox>
+        <property name="name">
+            <cstring>unnamed</cstring>
+        </property>
+        <widget class="QLayoutWidget">
+            <property name="name">
+                <cstring>layout6</cstring>
+            </property>
+            <hbox>
+                <property name="name">
+                    <cstring>unnamed</cstring>
+                </property>
+                <widget class="QPushButton">
+                    <property name="name">
+                        <cstring>prev_button</cstring>
+                    </property>
+                    <property name="text">
+                        <string></string>
+                    </property>
+                    <property name="pixmap">
+                        <pixmap>image0</pixmap>
+                    </property>
+                    <property name="toolTip" stdset="0">
+                        <string>Previous Track</string>
+                    </property>
+                </widget>
+                <widget class="QPushButton">
+                    <property name="name">
+                        <cstring>play_pause_button</cstring>
+                    </property>
+                    <property name="text">
+                        <string></string>
+                    </property>
+                    <property name="pixmap">
+                        <pixmap>image1</pixmap>
+                    </property>
+                    <property name="toolTip" stdset="0">
+                        <string>Play Track</string>
+                    </property>
+                </widget>
+                <widget class="QPushButton">
+                    <property name="name">
+                        <cstring>stop_button</cstring>
+                    </property>
+                    <property name="text">
+                        <string></string>
+                    </property>
+                    <property name="pixmap">
+                        <pixmap>image2</pixmap>
+                    </property>
+                    <property name="toolTip" stdset="0">
+                        <string>Stop Track</string>
+                    </property>
+                </widget>
+                <widget class="QPushButton">
+                    <property name="name">
+                        <cstring>next_button</cstring>
+                    </property>
+                    <property name="text">
+                        <string></string>
+                    </property>
+                    <property name="pixmap">
+                        <pixmap>image3</pixmap>
+                    </property>
+                    <property name="toolTip" stdset="0">
+                        <string>Next Track</string>
+                    </property>
+                </widget>
+            </hbox>
+        </widget>
+        <widget class="QLayoutWidget">
+            <property name="name">
+                <cstring>layout3</cstring>
+            </property>
+            <hbox>
+                <property name="name">
+                    <cstring>unnamed</cstring>
+                </property>
+                <widget class="QSlider">
+                    <property name="name">
+                        <cstring>track_slider</cstring>
+                    </property>
+                    <property name="sizePolicy">
+                        <sizepolicy>
+                            <hsizetype>0</hsizetype>
+                            <vsizetype>0</vsizetype>
+                            <horstretch>0</horstretch>
+                            <verstretch>0</verstretch>
+                        </sizepolicy>
+                    </property>
+                    <property name="minimumSize">
+                        <size>
+                            <width>150</width>
+                            <height>19</height>
+                        </size>
+                    </property>
+                    <property name="maximumSize">
+                        <size>
+                            <width>150</width>
+                            <height>19</height>
+                        </size>
+                    </property>
+                    <property name="pageStep">
+                        <number>1</number>
+                    </property>
+                    <property name="orientation">
+                        <enum>Horizontal</enum>
+                    </property>
+                </widget>
+                <widget class="QLabel">
+                    <property name="name">
+                        <cstring>time_label</cstring>
+                    </property>
+                    <property name="font">
+                        <font>
+                            <family>Bitstream Vera Sans Mono</family>
+                            <bold>1</bold>
+                        </font>
+                    </property>
+                    <property name="text">
+                        <string>00:04:20</string>
+                    </property>
+                    <property name="scaledContents">
+                        <bool>true</bool>
+                    </property>
+                    <property name="alignment">
+                        <set>AlignCenter</set>
+                    </property>
+                </widget>
+            </hbox>
+        </widget>
+    </vbox>
+</widget>
+<images>
+    <image name="image0">
+        <data format="PNG" length="505">89504e470d0a1a0a0000000d4948445200000018000000180806000000e0773df8000001c0494441544889ed94b16ed3501486bf63c7917a0daeb321612545888a2af5d4aa03cd92c780962a85a120a1562274811951a985b92fd0d7e8803cb155b064e1052882464ca1f1614804a972739d2c4cfd252fc7f7fedf7feca303d72a906fa9dd0116805bc01c50017e16f834875e3fa681a6808e3eaaaa05e6dae9748a42fcd53aa0edf64b3d38785704688e8438b31df02651c23024491257902670fafcd98e33ed44401cc754e2d869bef1e8212bab2b4e40c952eb02948380300c279a3f7db24d9a2eb3747f69664004830e4c68ace67bbb2f585cbc47bdbe4c341f3901b64fd405e8f7fb944bc1687d6790bc45b55aa3565b701a1776e0fb3ebdcbdfa3f5e3fdfd5754e66f92a67534cf0982002900d83ab8b475906559fbf0f08824a972feed9c521020225080b0016e0344d10d3cffdfeb46a3f1415537b75adbf4f39c5eaf8731066476000073c6e079573789889ca8eae6e3ad1617175d827299707c10aec8f60f00f03d0fdf1b4f3784ac89c86e967dc418eb283b01831b0a9e6fdb8520227baafa4b445e7ff96cdd104ec057805c0753324922f24655bf8bc87b27c1a207ccb04d55f5edf0cca76901151dd7b1eb82aa6ea8eadd6901d7fabffa03fe26a0b402dab1030000000049454e44ae426082</data>
+    </image>
+    <image name="image1">
+        <data format="PNG" length="310">89504e470d0a1a0a0000000d4948445200000018000000180806000000e0773df8000000fd494441544889edd2412e435114c6f1ff73ceede3de9797d6a06ca04250f499107bb00c0906986209c21624ac43c2b4fbb08c63201db63df7a59df51b9f7cbf739203abcc8938662e810af86d03ac3966b68131d02c0b98a415e2061eeeef5a216e6023466e6faeb31137a0221c0e0f787e7acc42dc8088a0a234cd096faf2f6ec47f810aaa8a6a606730e0f3e3dd85e45da042504183b2d5eff3f3fd053036339bba581ea06808ac972529551c8f4e31338aa228160254a922c6484a89e1d1686e791650d7352a42afb7c9eedebeab1c32dfb4ee76b3cab3804ed9e1ecfc22abdc9b2bc0009bf52dd3e2b920f1dfbef0cd2769da6ceece32bb5701e00f2efa3d634725886e0000000049454e44ae426082</data>
+    </image>
+    <image name="image2">
+        <data format="PNG" length="272">89504e470d0a1a0a0000000d4948445200000018000000180806000000e0773df8000000d7494441544889ed944d0e823010461fccd41f8620247a00a35b371e4d367a144fe7c65ba8e8868d5a1404624c7c4993a6fda6af6dd2c29f6f1378c6e6c0a4ec3be00444c0b5cc5f1ff20a1c81435de9ba5ca4512b795a4c3d821020cf37645986aa2f72cf76bbab9cabac3633968b05e7cbe5ade0152fb7571405599a762e2800868301aa8299752e00208e0de71c9145ad0461abea1a545ed16c36258e8d68fc83270060341aa22248e87beced04670015455509453a1704002242922438e75a097cace8f92f3afa8235d87f52d488ba27a80cffe9851bac6e461ab59bee7f0000000049454e44ae426082</data>
+    </image>
+    <image name="image3">
+        <data format="PNG" length="439">89504e470d0a1a0a0000000d4948445200000018000000180806000000e0773df80000017e494441544889ed943d4b643118859fb97933e324d770af850a4ee1162e8a1fec3a163af81fac15ac05b558c7d2b5d646b4b415f47708b3cd1656fe005b5bb1546762e107839a3b972b5879204d38394f0e092f7cab8754607f098881eb8cb33f80516018a80229709317bc0678a09ee1997ef6bc2eefbd7f6b8a7a802e32200e607bbbc9fefe5e302013d0dcfad30b82b5965aad560c503586cd8df54c489224a449520c204a313d33c5eedf9d8f20b70065adb1d6160328a51025d4ebbf393a3c780b712f0d8c35051b88424410d1fc1c1be3ecf4a41b720bd06eb7298bfe44035168518816860607f9d73a07b868b55a972f9ebb87fbf0257b0304d19abe4a056b637ecdcee1bda7542acd03ff3fdd20b631c618fa9deb0e2f012300cec5442a1c93d9c0398728459a0e303e31d91dfeaaaa31445168e2e4f8a62e4982e1002a8a50d1bbed7c8072a5cc42633114fef4f93d44aa6083e595d5e0cd812b808eefa075f891436a12988e5d6a90639a8654cf614efd7b1de7057cebebf408caf3752f159833b10000000049454e44ae426082</data>
+    </image>
+</images>
+<layoutdefaults spacing="6" margin="8"/>
+</UI>

@@ -1,0 +1,129 @@
+<!DOCTYPE UI><UI version="3.3" stdsetdef="1">
+<class>CurrentTrackWidgetBase</class>
+<widget class="QWidget">
+    <property name="name">
+        <cstring>CurrentTrackWidgetBase</cstring>
+    </property>
+    <property name="geometry">
+        <rect>
+            <x>0</x>
+            <y>0</y>
+            <width>214</width>
+            <height>74</height>
+        </rect>
+    </property>
+    <property name="caption">
+        <string>CurrentTrackWidgetBase</string>
+    </property>
+    <vbox>
+        <property name="name">
+            <cstring>unnamed</cstring>
+        </property>
+        <widget class="QLayoutWidget">
+            <property name="name">
+                <cstring>layout6</cstring>
+            </property>
+            <hbox>
+                <property name="name">
+                    <cstring>unnamed</cstring>
+                </property>
+                <widget class="QLabel">
+                    <property name="name">
+                        <cstring>cover_label</cstring>
+                    </property>
+                    <property name="minimumSize">
+                        <size>
+                            <width>64</width>
+                            <height>64</height>
+                        </size>
+                    </property>
+                    <property name="maximumSize">
+                        <size>
+                            <width>64</width>
+                            <height>64</height>
+                        </size>
+                    </property>
+                    <property name="frameShape">
+                        <enum>Box</enum>
+                    </property>
+                    <property name="frameShadow">
+                        <enum>Plain</enum>
+                    </property>
+                    <property name="pixmap">
+                        <pixmap>image0</pixmap>
+                    </property>
+                    <property name="scaledContents">
+                        <bool>true</bool>
+                    </property>
+                </widget>
+                <widget class="QLayoutWidget">
+                    <property name="name">
+                        <cstring>layout4</cstring>
+                    </property>
+                    <vbox>
+                        <property name="name">
+                            <cstring>unnamed</cstring>
+                        </property>
+                        <widget class="QLabel">
+                            <property name="name">
+                                <cstring>title_label</cstring>
+                            </property>
+                            <property name="text">
+                                <string>&lt;p align="left"&gt;&lt;nobr&gt;&lt;b&gt;@TITLE@&lt;/b&gt;&lt;/nobr&gt;&lt;/p&gt;</string>
+                            </property>
+                        </widget>
+                        <widget class="QLabel">
+                            <property name="name">
+                                <cstring>artist_label</cstring>
+                            </property>
+                            <property name="text">
+                                <string>&lt;nobr&gt;@ARTIST@&lt;/nobr&gt;</string>
+                            </property>
+                        </widget>
+                    </vbox>
+                </widget>
+                <spacer>
+                    <property name="name">
+                        <cstring>spacer3</cstring>
+                    </property>
+                    <property name="orientation">
+                        <enum>Horizontal</enum>
+                    </property>
+                    <property name="sizeType">
+                        <enum>Expanding</enum>
+                    </property>
+                    <property name="sizeHint">
+                        <size>
+                            <width>40</width>
+                            <height>20</height>
+                        </size>
+                    </property>
+                </spacer>
+            </hbox>
+        </widget>
+        <spacer>
+            <property name="name">
+                <cstring>spacer2</cstring>
+            </property>
+            <property name="orientation">
+                <enum>Vertical</enum>
+            </property>
+            <property name="sizeType">
+                <enum>Expanding</enum>
+            </property>
+            <property name="sizeHint">
+                <size>
+                    <width>20</width>
+                    <height>40</height>
+                </size>
+            </property>
+        </spacer>
+    </vbox>
+</widget>
+<images>
+    <image name="image0">
+        <data format="PNG" length="844">89504e470d0a1a0a0000000d4948445200000040000000400806000000aa6971de0000031349444154789ced984b6c4c6114c77fd4a30991b0508a7a542b88b71029b5212251892021b1b0b1111b894762d55d3762258d588884888506a945258a44a2415a8dc623546c904aa9571fb4742cbeff97f96632d3b9c34cbb707ec9cd99ff77cf39f7dc6fbefb38170cc3300cc3300cc3300cc3300cc3300c63a42800de033160cd08d79235537085f703e7814fc077a03af02907ae01df806ea00e98aa7ddb151f6e3f818979af3c47acc5153d086c022aa57bb57f0ef011680366003bb5bf3ec87154632dc352718ed9872bfe8ef432e917d217a5aba4c74af70539ce68ec6cbe8bf58cce61aef9b24db22b641fcb6e95bd27eb97764f90a354b63987750d492e27a04cf6a5ec72d956d909b2fe8437c8360439867d0272c903dcf2ad90be2bbd45fa86f42ea018780274e2ee0d9e7ef92cc87bb579a00b57bcbfab7f962e922ec23d017a80afc055e2abc67312f7e48801aff25caf6118863112f8f77c708fc318f005181521368a7f563973f922f437ac926d213e29ffea9f55ce31110e9a6bc27fc5171bf5cd2f8a7f56399357c061125bd166607db0ff83f69548d748374688f7ed72f710c5663abef72f039ee1de1cdb708d57ba9c25c0055c27fa03b809cc240dc780d5c0785c4b1b035e07fb6f696c1b300df75617c3b5c299e27dbbdc1ae4f31f3fca22c487fe4d3afe6ee98769724e07de692b057690f8870d49016e860782b1534a700238addfd723c6fb76f98a74a69b5572bcf78f018b35368ef847985439cf491f49e39fc06ce012d001fc0e0ed61ef8ecd7d87ddc121d0496448caf96ae91ae92be1d31defb3f0aea99acb18e34393b833ce1e63bd6847b401db0173804140207351e7e9d69935d879bcdcbc158a678bfccfd09255fab99e253dddc36ca36a4f199245b885b117e2b27057db8d959082c02de481f0f7c0a815f1a1f20fe11244abc6f972ba5eba5f7448cf7feedc05c6016f014d775ce4b93b351fa806aaf006a539d3cb8eba48bf8c7ca76056f4ef27b4eeacf5699e27dbb5c2c9d7c03cc14effd6b81b7b8ebb8095819d4909cb304b73a7a712d781db034dd0418866118866118866118866118c67fc01f6a701b181c4012d10000000049454e44ae426082</data>
+    </image>
+</images>
+<layoutdefaults spacing="5" margin="0"/>
+</UI>

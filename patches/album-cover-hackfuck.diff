@@ -1,0 +1,694 @@
+? Makefile
+? README
+? README.html
+? README.t2t
+? README.t2t.in
+? autom4te.cache
+? build
+? config.log
+? config.status
+? configure
+? database-mysql.py
+? genres
+? genres.gnumeric
+? mesk-0.0.666.ebuild
+? sample
+? setup.py
+? syncstats.gnumeric
+? syncwidget.ui
+? test.db
+? src/eyeTunez/__init__.pyc
+? src/eyeTunez/albumcover.pyc
+? src/eyeTunez/amazon.pyc
+? src/eyeTunez/archive.pyc
+? src/eyeTunez/config.pyc
+? src/eyeTunez/database.pyc
+? src/eyeTunez/externalsearch.py
+? src/eyeTunez/externalsearch.pyc
+? src/eyeTunez/program_info.py
+? src/eyeTunez/program_info.pyc
+? src/eyeTunez/utils.pyc
+? src/eyeTunez/ui/AboutDialog.pyc
+? src/eyeTunez/ui/AboutDialogBase.py
+? src/eyeTunez/ui/AboutDialogBase.pyc
+? src/eyeTunez/ui/AlbumCoverLabel.pyc
+? src/eyeTunez/ui/ArtistAlbumBrowserBase.py
+? src/eyeTunez/ui/AudioControlWidget.pyc
+? src/eyeTunez/ui/AudioControlWidgetBase.png
+? src/eyeTunez/ui/AudioControlWidgetBase.py
+? src/eyeTunez/ui/AudioControlWidgetBase.pyc
+? src/eyeTunez/ui/BrowserWidget.py
+? src/eyeTunez/ui/BrowserWidget.pyc
+? src/eyeTunez/ui/BrowserWidgetBase.py
+? src/eyeTunez/ui/BrowserWidgetBase.pyc
+? src/eyeTunez/ui/BrowserWidgetBase.ui
+? src/eyeTunez/ui/CurrentTrackWidget.py
+? src/eyeTunez/ui/CurrentTrackWidget.pyc
+? src/eyeTunez/ui/CurrentTrackWidgetBase.py
+? src/eyeTunez/ui/CurrentTrackWidgetBase.pyc
+? src/eyeTunez/ui/GstAudioControl.pyc
+? src/eyeTunez/ui/MainWindow.pyc
+? src/eyeTunez/ui/MainWindowBase.py
+? src/eyeTunez/ui/MainWindowBase.pyc
+? src/eyeTunez/ui/PlaylistTable.pyc
+? src/eyeTunez/ui/PlaylistWidget.pyc
+? src/eyeTunez/ui/PlaylistWidgetBase.py
+? src/eyeTunez/ui/PlaylistWidgetBase.pyc
+? src/eyeTunez/ui/StartHereWizard.pyc
+? src/eyeTunez/ui/StartHereWizardBase.py
+? src/eyeTunez/ui/StartHereWizardBase.pyc
+? src/eyeTunez/ui/__init__.pyc
+? src/eyeTunez/ui/rhythmbox-next.png
+? src/eyeTunez/ui/rhythmbox-pause.png
+? src/eyeTunez/ui/rhythmbox-play.png
+? src/eyeTunez/ui/rhythmbox-playing.png
+? src/eyeTunez/ui/rhythmbox-previous.png
+? src/eyeTunez/ui/rhythmbox-stop.png
+===================================================================
+RCS file: /opt/data/files/travis/cvsroot/eyeTunez/src/eyeTunez/__init__.py,v
+retrieving revision 1.19
+diff -c -u -r1.19 __init__.py
+--- src/eyeTunez/__init__.py	24 Dec 2004 19:51:15 -0000	1.19
++++ src/eyeTunez/__init__.py	3 Feb 2005 23:38:27 -0000
+@@ -24,7 +24,7 @@
+ import archive;
+ import database;
+ import utils;
+-import albumcover;
++import externalsearch;
+ 
+ class AudioControl:
+     def play(self):
+Index: src/eyeTunez/ui/AlbumCoverLabel.py
+===================================================================
+RCS file: /opt/data/files/travis/cvsroot/eyeTunez/src/eyeTunez/ui/AlbumCoverLabel.py,v
+retrieving revision 1.1
+diff -c -u -r1.1 AlbumCoverLabel.py
+--- src/eyeTunez/ui/AlbumCoverLabel.py	20 Dec 2004 07:01:38 -0000	1.1
++++ src/eyeTunez/ui/AlbumCoverLabel.py	3 Feb 2005 23:38:27 -0000
+@@ -33,6 +33,13 @@
+         self._default_pixmap.loadFromData(blank_image_data);
+         self.setPixmap(self._default_pixmap);
+ 
++        self.album_into_tt = AlbumInfoToolTip(self);
++
++    # SLOT
++    def set(self, artist, album, track):
++        # TODO
++        pass;
++
+     def setPixmap(self, pm):
+         if not pm:
+             pm = self._default_pixmap;
+@@ -42,6 +49,13 @@
+         # TODO: Album presentation; the ability to view/select alternate covers
+         print "AlbumCoverLabel double clicked"
+ 
++class AlbumInfoToolTip(QToolTip):
++    def __init__(self, widget, tt_grp = None):
++        QToolTip.__init__(self, widget, tt_grp);
++
++    def maybeTip(self, pos):
++        self.tip(self.parentWidget().rect(), "Year: 2005");
++
+ blank_image_data = \
+     "\x89\x50\x4e\x47\x0d\x0a\x1a\x0a\x00\x00\x00\x0d" \
+     "\x49\x48\x44\x52\x00\x00\x00\x01\x00\x00\x00\x01" \
+@@ -49,3 +63,4 @@
+     "\x0d\x49\x44\x41\x54\x08\x99\x63\x60\x60\x60\x60" \
+     "\x00\x00\x00\x05\x00\x01\x87\xa1\x4e\xd4\x00\x00" \
+     "\x00\x00\x49\x45\x4e\x44\xae\x42\x60\x82";
++
+Index: src/eyeTunez/ui/GstAudioControl.py
+===================================================================
+RCS file: /opt/data/files/travis/cvsroot/eyeTunez/src/eyeTunez/ui/GstAudioControl.py,v
+retrieving revision 1.25
+diff -c -u -r1.25 GstAudioControl.py
+--- src/eyeTunez/ui/GstAudioControl.py	27 Dec 2004 21:37:09 -0000	1.25
++++ src/eyeTunez/ui/GstAudioControl.py	3 Feb 2005 23:38:27 -0000
+@@ -189,6 +189,8 @@
+     # audioPaused(int) - The track paused playing
+     # audioComplete(int) - The track played until the end
+     # audioSkipped(int) - The track was skipped.
++    # audioSrcSet(artist,album,track) - The src element has been set though not
++    #                                   necessarily playing. 
+ 
+     def play(self):
+         if self.isPlaying():
+@@ -256,6 +258,11 @@
+         assert(track);
+         self._setSourceURI(track.path);
+         self.player_widget.track_slider.setMaxValue(track.time);
++        print "emitting"
++        self.emit(PYSIGNAL("audioSrcSet(artist,album,track)"),
++                  (self._playlist.getArtist(track.artist_id),
++                   self._playlist.getAlbum(track.album_id),
++                   track));
+     def _setSourceURI(self, uri):
+         # Strip file:// since the file sink does not deal with it.
+         if uri.find("file://") == 0:
+Index: src/eyeTunez/ui/MainWindow.py
+===================================================================
+RCS file: /opt/data/files/travis/cvsroot/eyeTunez/src/eyeTunez/ui/MainWindow.py,v
+retrieving revision 1.47
+diff -c -u -r1.47 MainWindow.py
+--- src/eyeTunez/ui/MainWindow.py	28 Dec 2004 02:27:56 -0000	1.47
++++ src/eyeTunez/ui/MainWindow.py	3 Feb 2005 23:38:27 -0000
+@@ -38,7 +38,7 @@
+         MainWindowBase.__init__(self, parent, "eyeTunez.ui.MainWindow", flags);
+         self.archive = archive;
+         self.config = config;
+-        self.log = eyeTunez.config.app_log;
++        self.log = config.getLog("default");
+ 
+         # Hook up menu items
+         self.connect(self.fileSyncAction, SIGNAL("activated()"), self.fileSync);
+@@ -80,6 +80,11 @@
+                      SIGNAL("doubleClicked(int, int, int, const QPoint&)"),
+                      self._trackSelected);
+ 
++        # Album covers are downloaded asynchronously and cached
++        self.album_cover_mgr = eyeTunez.externalsearch.AlbumCoverMgr(config);
++        # TODO
++        #self.current_track_widget.setAlbumCoversEnabled(self.external_search);
++
+         # Audio controller
+         self.audio_controller = GstAudioControl(self.player_widget, config, pl);
+         self.connect(self.audio_controller, PYSIGNAL("audioPlaying(int)"),
+@@ -88,26 +93,24 @@
+                      self._trackComplete);
+         self.connect(self.audio_controller, PYSIGNAL("audioSkipped(int)"),
+                      self._trackSkipped);
++        self.connect(self.audio_controller,
++                     PYSIGNAL("audioSrcSet(artist,album,track)"),
++                     self.current_track_widget.display);
++        # Reset playlist to emit audioSrcSet
++        self.audio_controller.setPlaylist(pl);
+ 
+         # Clear currently playing
+-        self.currently_playing_label.setText("");
++        #self.currently_playing_label.setText("");
+         self.playlist_widget.setPlayingRow(pl.getCurrentIndex());
+ 
+         # Browser initialization
+         self.browser_widget.setArchive(self.archive);
+ 
+-        # Album covers are downloaded asynchronously and cached
+-        self._last_playing_album = None;
+-        self.amazon_search = eyeTunez.albumcover.AmazonSearchThread(config);
+-        self.amazon_search.start();
+-        self._setAlbumCoverLabel(None);
+-
+         self.sync_thread = None;
+         self.progress_bar = QProgressBar(100, self);
+         self.progress_bar.setCenterIndicator(True);
+         self.progress_bar.setMaximumWidth(150);
+ 
+-
+     def show(self):
+         # Restore our state
+         if self.ui_props.main_window_pos_x or self.ui_props.main_window_pos_y:
+@@ -125,7 +128,6 @@
+         self.playlist_widget.setPlayingRow(pos);
+         self._updateCurrentlyPlaying(self.pl[pos]);
+     def _trackComplete(self, pos):
+-        self.log.debug("Track complete: %d" % pos);
+         db = self.archive.getDatabase();
+         # Update play_count and _play_date in database.
+         db.connect();
+@@ -210,6 +212,10 @@
+ 
+         # Remove tracks from playlist.
+         index_list.reverse();
++        # Order n^2 because for visual pleasantry.
++        for i in index_list:
++            self.playlist_widget.pl_table.hideRow(i);
++            self.playlist_widget.pl_table.update();
+         for i in index_list:
+             # The order of these two calls is required.
+             self.playlist_widget.remove(i);
+@@ -247,9 +253,9 @@
+     def _updateCurrentlyPlaying(self, track):
+         if track == None:
+             self._updateAlbumCover(None, None);
+-            self._last_playing_album = None;
+-            self.currently_playing_label.setText(QString(""));
+-            self.currently_playing_label.adjustSize();
++            #self._last_playing_album = None;
++            #self.currently_playing_label.setText(QString(""));
++            #self.currently_playing_label.adjustSize();
+         else:
+             artist = self.pl.getArtist(track.artist_id);
+             album = self.pl.getAlbum(track.album_id);
+@@ -258,17 +264,18 @@
+                            {"artist": artist.name,
+                             "album": album.name,
+                             "track": track.name});
+-            self.currently_playing_label.setText(QString(text));
+-            self.currently_playing_label.adjustSize();
+-            self._last_playing_album = album;
++            #self.currently_playing_label.setText(QString(text));
++            #self.currently_playing_label.adjustSize();
++            #self._last_playing_album = album;
+ 
+     def _updateAlbumCover(self, artist, album):
+-        if self._last_playing_album and\
+-           self._last_playing_album.id == album.id:
++        #if album and self._last_playing_album and\
++        #   self._last_playing_album.id == album.id:
+             # No update necessary
+-            return;
++        #    return;
+         self._setAlbumCoverLabel(None);
+-        self._setAlbumCoverLabel(album, artist);
++        if album:
++            self._setAlbumCoverLabel(album, artist);
+ 
+     def _setAlbumCoverLabel(self, album, artist = None):
+         pm = QPixmap();
+@@ -281,20 +288,21 @@
+             if pm.isNull() and artist:
+                 self.log.debug("Searching for album cover for '%s'" %\
+                                album.name);
+-                self.amazon_search.search(artist, album,
++                self.external_search.search(artist, album,
+                                           self._albumCoverSearchCB, None);
+                 return;
+         else:
+             self.log.debug("Searching for album cover for '%s'" %\
+                            album.name);
+-            self.amazon_search.search(artist, album,
++            self.external_search.search(artist, album,
+                                       self._albumCoverSearchCB, None);
+             return;
+         self.current_album_pixmap = pm;
+         # The following need to occur on the Qt thread.
+         QTimer.singleShot(0, self.__setAlbumCoverPixmap);
+     def __setAlbumCoverPixmap(self):
+-        self.album_label.setPixmap(self.current_album_pixmap);
++        #self.album_label.setPixmap(self.current_album_pixmap);
++        pass;
+ 
+     def _albumCoverSearchCB(self, artist, album, album_list, arg):
+         self.log.debug("Amazon search for '%s' returned %d results" %\
+@@ -302,10 +310,10 @@
+         if len(album_list):
+             # XXX: Always taking the first match.
+             album_info = album_list[0];
+-            url = album_info.getImageURL(albumcover.IMG_SMALL);
+-            album.small_cover = self._fetchAndSaveImage(url,
+-                                                        albumcover.IMG_SMALL,
+-                                                        artist, album);
++            url = album_info.getImageURL(externalsearch.IMG_SMALL);
++            album.small_cover =\
++                self._fetchAndSaveImage(url, externalsearch.IMG_SMALL,
++                                        artist, album);
+             if not album.small_cover:
+                 self.log.info("No album cover found for '%s' by %s" %\
+                               (album.name, artist.name));
+@@ -320,11 +328,11 @@
+             db.disconnect();
+ 
+     def _fetchAndSaveImage(self, url_str, sz, artist, album):
+-        if sz == albumcover.IMG_SMALL:
++        if sz == externalsearch.IMG_SMALL:
+             sz_str = "SMALL";
+-        elif sz == albumcover.IMG_MEDIUM:
++        elif sz == externalsearch.IMG_MEDIUM:
+             sz_str = "MEDIUM";
+-        elif sz == albumcover.IMG_LARGE:
++        elif sz == externalsearch.IMG_LARGE:
+             sz_str = "LARGE";
+         else:
+             assert(False);
+@@ -408,12 +416,11 @@
+         dialog.exec_loop();
+         del dialog;
+ 
+-    # XXX: What I really want is a destructor here.  Is there such a thing???
+-    def exit(self):
++    # Close the window, this is not a qt method, but a place to save state.
++    def close(self):
+         self.log.debug("MainWindow exiting");
+         # Stop threads
+         self.player_widget.stop();
+-        self.amazon_search.stop();
+         # Update db playlist
+         self.fileSavePlaylist();
+         # Update db ui properties
+Index: src/eyeTunez/ui/MainWindowBase.ui
+===================================================================
+RCS file: /opt/data/files/travis/cvsroot/eyeTunez/src/eyeTunez/ui/MainWindowBase.ui,v
+retrieving revision 1.21
+diff -c -u -r1.21 MainWindowBase.ui
+--- src/eyeTunez/ui/MainWindowBase.ui	20 Dec 2004 07:01:38 -0000	1.21
++++ src/eyeTunez/ui/MainWindowBase.ui	3 Feb 2005 23:38:27 -0000
+@@ -3,7 +3,8 @@
+ <comment>Python:from AudioControlWidget import AudioControlWidget;
+ Python:from PlaylistWidget import PlaylistWidget;
+ Python:from BrowserWidget import BrowserWidget;
+-Python:from AlbumCoverLabel import AlbumCoverLabel;</comment>
++Python:from AlbumCoverLabel import AlbumCoverLabel;
++Python:from CurrentTrackWidget import CurrentTrackWidget;</comment>
+ <widget class="QMainWindow">
+     <property name="name">
+         <cstring>MainWindowBase</cstring>
+@@ -12,10 +13,16 @@
+         <rect>
+             <x>0</x>
+             <y>0</y>
+-            <width>663</width>
+-            <height>680</height>
++            <width>466</width>
++            <height>248</height>
+         </rect>
+     </property>
++    <property name="minimumSize">
++        <size>
++            <width>105</width>
++            <height>248</height>
++        </size>
++    </property>
+     <property name="caption">
+         <string>Mesk</string>
+     </property>
+@@ -29,9 +36,12 @@
+         <property name="name">
+             <cstring>unnamed</cstring>
+         </property>
++        <property name="margin">
++            <number>3</number>
++        </property>
+         <widget class="QLayoutWidget">
+             <property name="name">
+-                <cstring>layout4</cstring>
++                <cstring>layout16</cstring>
+             </property>
+             <hbox>
+                 <property name="name">
+@@ -68,36 +78,35 @@
+                     </property>
+                     <property name="sizeHint">
+                         <size>
+-                            <width>410</width>
++                            <width>444</width>
+                             <height>20</height>
+                         </size>
+                     </property>
+                 </spacer>
+-                <widget class="AlbumCoverLabel">
++                <widget class="CurrentTrackWidget">
+                     <property name="name">
+-                        <cstring>album_label</cstring>
+-                    </property>
+-                </widget>
+-                <widget class="QLabel">
+-                    <property name="name">
+-                        <cstring>currently_playing_label</cstring>
+-                    </property>
+-                    <property name="font">
+-                        <font>
+-                            <family>Bitstream Vera Serif</family>
+-                        </font>
+-                    </property>
+-                    <property name="text">
+-                        <string>&lt;p align="center"&gt;&lt;b&gt;@TITLE@&lt;/b&gt;&lt;br&gt;
+-By @ARTIST@&lt;br&gt;
+-@ALBUM@&lt;/p&gt;</string>
+-                    </property>
+-                    <property name="alignment">
+-                        <set>AlignVCenter</set>
++                        <cstring>current_track_widget</cstring>
+                     </property>
+                 </widget>
+             </hbox>
+         </widget>
++        <spacer>
++            <property name="name">
++                <cstring>spacer14</cstring>
++            </property>
++            <property name="orientation">
++                <enum>Vertical</enum>
++            </property>
++            <property name="sizeType">
++                <enum>Expanding</enum>
++            </property>
++            <property name="sizeHint">
++                <size>
++                    <width>20</width>
++                    <height>16</height>
++                </size>
++            </property>
++        </spacer>
+         <widget class="QTabWidget">
+             <property name="name">
+                 <cstring>tab_widget</cstring>
+@@ -237,16 +246,16 @@
+         <pixmap>image1</pixmap>
+     </customwidget>
+     <customwidget>
+-        <class>AlbumCoverLabel</class>
++        <class>CurrentTrackWidget</class>
+         <header location="local">mywidget.h</header>
+         <sizehint>
+-            <width>64</width>
+-            <height>64</height>
++            <width>-1</width>
++            <height>-1</height>
+         </sizehint>
+         <container>0</container>
+         <sizepolicy>
+-            <hordata>0</hordata>
+-            <verdata>0</verdata>
++            <hordata>5</hordata>
++            <verdata>5</verdata>
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+         </sizepolicy>
+@@ -467,10 +476,10 @@
+     <slot>helpContents()</slot>
+     <slot>helpAbout()</slot>
+ </slots>
+-<layoutdefaults spacing="6" margin="8"/>
++<layoutdefaults spacing="6" margin="10"/>
+ <includehints>
+     <includehint>audiocontrolwidget.h</includehint>
+-    <includehint>albumcoverlabel.h</includehint>
++    <includehint>currenttrackwidget.h</includehint>
+     <includehint>browserwidget.h</includehint>
+     <includehint>playlistwidget.h</includehint>
+ </includehints>
+Index: src/eyeTunez/ui/StartHereWizardBase.ui
+===================================================================
+RCS file: /opt/data/files/travis/cvsroot/eyeTunez/src/eyeTunez/ui/StartHereWizardBase.ui,v
+retrieving revision 1.3
+diff -c -u -r1.3 StartHereWizardBase.ui
+--- src/eyeTunez/ui/StartHereWizardBase.ui	28 Dec 2004 05:31:20 -0000	1.3
++++ src/eyeTunez/ui/StartHereWizardBase.ui	3 Feb 2005 23:38:27 -0000
+@@ -11,8 +11,8 @@
+         <rect>
+             <x>0</x>
+             <y>0</y>
+-            <width>600</width>
+-            <height>480</height>
++            <width>486</width>
++            <height>353</height>
+         </rect>
+     </property>
+     <property name="caption">
+@@ -31,25 +31,41 @@
+         <attribute name="title">
+             <string>Welcome</string>
+         </attribute>
+-        <widget class="QFrame">
++        <grid>
+             <property name="name">
+-                <cstring>frame6</cstring>
++                <cstring>unnamed</cstring>
+             </property>
+-            <property name="geometry">
+-                <rect>
+-                    <x>10</x>
+-                    <y>0</y>
+-                    <width>270</width>
+-                    <height>230</height>
+-                </rect>
+-            </property>
+-            <property name="frameShape">
+-                <enum>StyledPanel</enum>
+-            </property>
+-            <property name="frameShadow">
+-                <enum>Raised</enum>
+-            </property>
+-        </widget>
++            <widget class="QFrame" row="0" column="0">
++                <property name="name">
++                    <cstring>frame6</cstring>
++                </property>
++                <property name="frameShape">
++                    <enum>StyledPanel</enum>
++                </property>
++                <property name="frameShadow">
++                    <enum>Raised</enum>
++                </property>
++                <widget class="QLabel">
++                    <property name="name">
++                        <cstring>textLabel1</cstring>
++                    </property>
++                    <property name="geometry">
++                        <rect>
++                            <x>0</x>
++                            <y>10</y>
++                            <width>280</width>
++                            <height>83</height>
++                        </rect>
++                    </property>
++                    <property name="text">
++                        <string>Welcome to the &lt;b&gt;Mesk &lt;/b&gt;install wizard...
++Follow the &lt;b&gt;fucking&lt;/b&gt; instructions, only &lt;u&gt;morons &lt;/u&gt;make mistakes!!
++
++-nicfit</string>
++                    </property>
++                </widget>
++            </widget>
++        </grid>
+     </widget>
+     <widget class="QWidget">
+         <property name="name">
+@@ -58,6 +74,68 @@
+         <attribute name="title">
+             <string>Data</string>
+         </attribute>
++        <vbox>
++            <property name="name">
++                <cstring>unnamed</cstring>
++            </property>
++            <widget class="QLabel">
++                <property name="name">
++                    <cstring>textLabel2</cstring>
++                </property>
++                <property name="text">
++                    <string>Enter the directory where Mesk will store music databases, album
++covers, log files, etc.</string>
++                </property>
++            </widget>
++            <spacer>
++                <property name="name">
++                    <cstring>spacer2_2</cstring>
++                </property>
++                <property name="orientation">
++                    <enum>Vertical</enum>
++                </property>
++                <property name="sizeType">
++                    <enum>Expanding</enum>
++                </property>
++                <property name="sizeHint">
++                    <size>
++                        <width>20</width>
++                        <height>100</height>
++                    </size>
++                </property>
++            </spacer>
++            <widget class="QLayoutWidget">
++                <property name="name">
++                    <cstring>layout3</cstring>
++                </property>
++                <hbox>
++                    <property name="name">
++                        <cstring>unnamed</cstring>
++                    </property>
++                    <widget class="QLabel">
++                        <property name="name">
++                            <cstring>textLabel3</cstring>
++                        </property>
++                        <property name="text">
++                            <string>Path:</string>
++                        </property>
++                    </widget>
++                    <widget class="QLineEdit">
++                        <property name="name">
++                            <cstring>lineEdit1</cstring>
++                        </property>
++                    </widget>
++                    <widget class="QPushButton">
++                        <property name="name">
++                            <cstring>pushButton1</cstring>
++                        </property>
++                        <property name="text">
++                            <string>Browse...</string>
++                        </property>
++                    </widget>
++                </hbox>
++            </widget>
++        </vbox>
+     </widget>
+     <widget class="QWidget">
+         <property name="name">
+@@ -66,6 +144,67 @@
+         <attribute name="title">
+             <string>Archive</string>
+         </attribute>
++        <vbox>
++            <property name="name">
++                <cstring>unnamed</cstring>
++            </property>
++            <widget class="QLabel">
++                <property name="name">
++                    <cstring>textLabel4</cstring>
++                </property>
++                <property name="text">
++                    <string>Enter the directory which Mesk will archive and manage.</string>
++                </property>
++            </widget>
++            <spacer>
++                <property name="name">
++                    <cstring>spacer4</cstring>
++                </property>
++                <property name="orientation">
++                    <enum>Vertical</enum>
++                </property>
++                <property name="sizeType">
++                    <enum>Expanding</enum>
++                </property>
++                <property name="sizeHint">
++                    <size>
++                        <width>20</width>
++                        <height>180</height>
++                    </size>
++                </property>
++            </spacer>
++            <widget class="QLayoutWidget">
++                <property name="name">
++                    <cstring>layout3_2</cstring>
++                </property>
++                <hbox>
++                    <property name="name">
++                        <cstring>unnamed</cstring>
++                    </property>
++                    <widget class="QLabel">
++                        <property name="name">
++                            <cstring>textLabel3_2</cstring>
++                        </property>
++                        <property name="text">
++                            <string>Path:</string>
++                        </property>
++                    </widget>
++                    <widget class="QLineEdit">
++                        <property name="name">
++                            <cstring>lineEdit1_2</cstring>
++                        </property>
++                    </widget>
++                    <widget class="QPushButton">
++                        <property name="name">
++                            <cstring>pushButton1_2</cstring>
++                        </property>
++                        <property name="text">
++                            <string>Browse...</string>
++                        </property>
++                    </widget>
++                </hbox>
++            </widget>
++        </vbox>
+     </widget>
+     <widget class="QWidget">
+         <property name="name">

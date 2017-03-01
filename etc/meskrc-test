@@ -1,0 +1,74 @@
+
+[MESK]
+; A list of music archives, each referring to a config section below.
+; There archive name MUST NOT contain whitespace characters.
+;archives = Main New
+archives = Test
+; The directory where databases are stored
+data_dir = ./test
+
+[Test]
+;root = ./music
+root = /home/travis/src/devel/mesk/test/music
+;root = /media/music/Albums
+exclude =
+db_type = SQLite
+; Relative paths are relative to the path set in MESK.data_dir
+db_name = %(data_dir)s/Test.db
+
+[audio]
+; The sound output layer: alsa, oss, esd
+audio_sink = alsa
+; The number of milliseconds to pasuse between tracks.
+gap_delay = 1000
+; CDROM device for playing and ripping
+cdrom = /dev/cdrom
+
+;; Logging configuration
+;; Described here: http://www.python.org/doc/2.3.4/lib/module-logging.html
+[loggers]
+keys = root,app,sync
+[handlers]
+keys = stderr,applog,synclog
+[formatters]
+keys = common,sync
+
+[logger_root]
+level = NOTSET
+handlers = stderr
+[logger_app]
+level = DEBUG
+handlers = applog
+propogate = 0
+qualname = app
+[logger_sync]
+level = INFO
+handlers = synclog
+propogate = 0
+qualname = sync
+
+[handler_stderr]
+level = ERROR
+class = StreamHandler
+formatter = common
+args = (sys.stderr,)
+[handler_applog]
+level = NOTSET
+class = FileHandler
+formatter = common
+args = ('%(data_dir)s/mesk.log', 'a')
+[handler_synclog]
+level = NOTSET
+class = FileHandler
+formatter = sync
+args = ('%(data_dir)s/sync.log', 'a')
+
+[formatter_common]
+level = NOTSET
+format = %(asctime)s %(levelname)s %(message)s
+datefmt =
+[formatter_sync]
+level = NOTSET
+format = [%(levelname)s] %(message)s
+datefmt =
+

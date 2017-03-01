@@ -1,0 +1,88 @@
+
+[MESK]
+; A list of music archives, each referring to a config section below.
+; There archive name MUST NOT contain whitespace characters.
+;archives = Main New
+archives = Main
+; The directory where databases are stored
+data_dir = ${HOME}/.mesk
+
+[Main]
+; The root path to your tunez
+root = /media/music/Albums
+; Directories to exclude from root.  These SHOULD end with '/' to prevent 
+; partial mactches.
+exclude = /media/music/New/ /media/music/Compilations/ /media/music/Incomplete/
+; The type of database backend you used.
+db_type = SQLite
+; The name of the database.  In SQLite the name is the file path of the datbase
+; file.
+db_name = /home/travis/src/devel/mesk/main.db
+
+[New]
+root = /media/music/New
+db_type = MySQL
+db_name = newtunez
+; The user login with perms that allow reading and writing to the database.
+db_user = mesk
+; User password
+db_pass = foo
+; Database host.
+db_host = localhost
+
+[audio]
+; The sound output layer: alsa, oss, esd
+audio_sink = alsa
+; The number of milliseconds to pasuse between tracks.
+gap_delay = 1000
+; CDROM device for playing and ripping
+cdrom = /dev/cdrom
+
+;; Logging configuration
+;; Described here: http://www.python.org/doc/2.3.4/lib/module-logging.html
+[loggers]
+keys = root,app,sync
+[handlers]
+keys = stderr,applog,synclog
+[formatters]
+keys = common,sync
+
+[logger_root]
+level = NOTSET
+handlers = stderr
+[logger_app]
+level = DEBUG
+handlers = applog
+propogate = 0
+qualname = app
+[logger_sync]
+level = INFO
+handlers = synclog
+propogate = 0
+qualname = sync
+
+[handler_stderr]
+level = ERROR
+class = StreamHandler
+formatter = common
+args = (sys.stderr,)
+[handler_applog]
+level = NOTSET
+class = FileHandler
+formatter = common
+args = ('%(data_dir)s/mesk.log', 'a')
+[handler_synclog]
+level = NOTSET
+class = FileHandler
+formatter = sync
+args = ('%(data_dir)s/sync.log', 'a')
+
+[formatter_common]
+level = NOTSET
+format = %(asctime)s %(levelname)s %(message)s
+datefmt =
+[formatter_sync]
+level = NOTSET
+format = [%(levelname)s] %(message)s
+datefmt =
+
